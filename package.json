@@ -1,0 +1,27 @@
+{
+  "name": "bookingid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valehaedo/bookingID.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valehaedo/bookingID/issues"
+  },
+  "homepage": "https://github.com/valehaedo/bookingID#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.21",
+    "node_module": "0.0.0",
+    "nodemon": "^2.0.4"
+  }
+}
