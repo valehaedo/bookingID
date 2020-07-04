@@ -7,3 +7,5 @@ const pasSchema = mongoose.schema({
     pasaporte: Number
     
 });
+
+module.exports = mongoose.model('pasajero', pasSchema, 'pasajeros');
