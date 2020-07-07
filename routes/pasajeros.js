@@ -4,7 +4,7 @@ const pasajSchem = require('../schemas/pasSchema');
 
 
 
-//registro al pasajero con Nombre-Apellido-Nro de Pasaporte
+//registro al pasajero con Nombre-Apellido-Nro de Pasaporte, 
 router.post('/', async (req, res) => {
     const pasaj = new pasajSchem({
         nombre: req.body.nombre,
@@ -12,12 +12,10 @@ router.post('/', async (req, res) => {
         pasaporte: req.body.pasaporte    
     });
     try{
-        const nPasaj = await pasaj.save()
-        res.json(nPasaj);
-        
+        await pasaj.save()
+        res.json(pasaj);
     }catch(err){
         res.json({err});
-        console.err(err)
     }
 });
 // get todos pasajeros
@@ -25,10 +23,8 @@ router.get('/', async (req, res) => {
     try{
         const allPasa = await pasajSchem.find();
         res.json(allPasa);
-        console.log(allPasa)
     }catch(err){
         res.json(err);
-        console.log(err);
     }
 });
 
@@ -47,7 +43,7 @@ router.get('/:pasaId', async (req, res) => {
 
 router.get('/:pasaId', async (req, res) => {
     const pasaId = req.params.pasaId;
-    if(pasaId===true) 
+    if(pasaId) 
         console.log("Pasanger ID found");
     else{
         console.log('Pasanger ID not found.');

@@ -12,9 +12,8 @@ router.post('/', async (req, res) => {
         habitacion: req.body.habitacion
     });
     try {
-        const nReserv = await reserv.save()
-        res.json(nReserv);
-
+        await reserv.save()
+        res.json(reserv)
     } catch (err) {
         res.json({ err });
         console.log(err)
@@ -26,13 +25,27 @@ router.post('/', async (req, res) => {
 
 
 
-//modifico reserva (solo habitacion/fecha)
+//modifico reserva (solo habitacion/fecha/estado)
 router.post('/:reservationId', async (req, res) => {
-    const fullReserv = await reservationSche.findById(reservationsId);
-    const date = req.body.date
-    if(date){
+    const fullReserv = await reservationSche.findById(req.params.reservationId);
+    const date = req.body.date;
+    const habitacion = req.body.habitacion;
+    const estado = req.body.estado;
 
+    if(date){
+            fullReserv.date = date 
     }
+
+    if(habitacion){
+            fullReserv.habitacion = habitacion
+    }
+
+    if(estado){
+        fullReserv.estado = estado
+    }
+    fullReserv.save();
+    res.json(fullReserv);
+
     /*const updateReser = await reservationSche.updateOne(
         { _id: req.params.reservationId },
             {
@@ -45,18 +58,25 @@ router.post('/:reservationId', async (req, res) => {
         
         res.json(updateReser);*/
 });
-
-//elimino reservas
-
+//obtengo todas las reservas
+router.get('/', async(req, res) => {
+    try{
+        const allReserv = await reservationSche.find();
+        res.json(allReserv);
+    }catch(err){
+        res.json(err);
+        console.log(err);
+    }
+});
 
 //obtengo reserva por ID 
-router.get('/:reservationsId', async (req, res) => {
-    const reservationsId = req.params.reservationsId;
-    if (reservationsId) {
-        const fullReserv = await reservationSche.findById(reservationsId);
-        console.log(fullReserv);
+router.get('/:reservationId', async (req, res) => {
+    const reservationId = req.params.reservationId;
+    if (reservationId) {
+        const fullReserv = await reservationSche.findById(reservationId);
+        res.json(fullReserv);
     } else {
-        console.log('Reservation or pasanger not found.');
+        res.json('Reservation or pasanger not found.');
     }
 })
 
