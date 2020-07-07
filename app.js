@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 const reservRouter = require('./routes/reservation');
 const pasaRouter = require('./routes/pasajeros');
-app.use('/pasajero', pasaRouter);
+app.use('/pasajeros', pasaRouter);
 app.use('/reservation', reservRouter);
 
 app.get('/', (req, res) => {

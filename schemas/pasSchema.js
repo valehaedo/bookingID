@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 //schema for pasajeros
-const pasSchema = mongoose.schema({
+const pasSchema = mongoose.Schema({
     nombre: String,
     apellido: String,
     pasaporte: Number
     
 });
 
-module.exports = mongoose.model('pasajero', pasSchema, 'pasajeros');
+module.exports = mongoose.model('pasajero', pasSchema);

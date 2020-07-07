@@ -2,11 +2,9 @@ const mongoose = require('mongoose')
 
 //schema for reservations
 const resSchema = mongoose.Schema({
-    nombre: String,
-    apellido: String,
-    pasaporte: Number,
+    pasaId: String,
     date: Date,
-    habitacion: Number
+    habitacion: String
     
 });
 

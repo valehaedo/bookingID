@@ -1,43 +1,63 @@
 //requiero los paquetes y modulos necesarios
 const express = require('express');
 const router = express.Router();
-const reservationSche = require ('../schemas/resSchema');
+const reservationSche = require('../schemas/resSchema');
 
 
-//registro al pasajero con Nombre-Apellido-Nro de Pasaporte
+//creo las reservas con ID de pasajero-fecha-Nro de habitacion
 router.post('/', async (req, res) => {
-    const reservation = new reservation({
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        pasaporte: req.Number.pasaporte    
+    const reserv = new reservationSche({
+        pasaId: req.body.pasaId,
+        date: req.body.date,
+        habitacion: req.body.habitacion
     });
-    try{
-        const savedReserv = await reservation.save()
-        console.log(savedReserv);
-    }catch(err){
+    try {
+        const nReserv = await reserv.save()
+        res.json(nReserv);
+
+    } catch (err) {
+        res.json({ err });
         console.log(err)
     }
 });
-/*
-//creo las reservas con ID de pasajero-fecha-Nro de habitacion
-    date: date.now,
-    habitacion: req.number.habitacion
 
-// verifico si el ID del pasajero existe o mostrar err
+
+
+
 
 
 //modifico reserva (solo habitacion/fecha)
+router.post('/:reservationId', async (req, res) => {
+    const fullReserv = await reservationSche.findById(reservationsId);
+    const date = req.body.date
+    if(date){
+
+    }
+    /*const updateReser = await reservationSche.updateOne(
+        { _id: req.params.reservationId },
+            {
+            $set: {
+                date: req.body.date,
+                habitacion: req.body.habitacion,
+                estado: req.body.estado
+            }
+        });
+        
+        res.json(updateReser);*/
+});
 
 //elimino reservas
 
-//obtengo reserva por ID o nombre o apellido 
-reservation.get('/:reservationsId', async (req, res) =>{
-    if(_id||nombre||apellido){
-        const fullReserv = await reservations.findById(req.params.reservationsId)
-        console.log(fullReserv)
-    }else{
-        console.log('Reservation or pasanger not found.')
+
+//obtengo reserva por ID 
+router.get('/:reservationsId', async (req, res) => {
+    const reservationsId = req.params.reservationsId;
+    if (reservationsId) {
+        const fullReserv = await reservationSche.findById(reservationsId);
+        console.log(fullReserv);
+    } else {
+        console.log('Reservation or pasanger not found.');
     }
 })
-*/
+
 module.exports = router;
