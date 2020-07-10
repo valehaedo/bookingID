@@ -14,13 +14,13 @@ app.use(bodyParser.json());
 
 const reservRouter = require('./routes/reservation');
 const pasaRouter = require('./routes/pasajeros');
+
 app.use('/pasajeros', pasaRouter);
 app.use('/reservation', reservRouter);
 
 app.get('/', (req, res) => {
     res.send('estamos conectados');
 })
-
 
 
 //indico el puerto en el que escucho

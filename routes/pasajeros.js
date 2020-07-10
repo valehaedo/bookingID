@@ -1,55 +1,57 @@
-const express= require('express');
-const router = express.Router();
-const pasajSchem = require('../schemas/pasSchema');
-
-
+//const express = require('express');
+const router = require('express').Router();
+const pasajeroService = require('../services/pasajeroService')
 
 //registro al pasajero con Nombre-Apellido-Nro de Pasaporte, 
 router.post('/', async (req, res) => {
-    const pasaj = new pasajSchem({
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        pasaporte: req.body.pasaporte    
-    });
-    try{
-        await pasaj.save()
-        res.json(pasaj);
-    }catch(err){
-        res.json({err});
+
+    try {
+
+        // Creo y obtengo el pasajero creado
+        const newPasajero = pasajeroService.create(req.body.nombre, req.body.apellido, req.body.pasaporte);
+
+        // Devuelvo la response con el pasajero creado
+        return res.json(newPasajero);
+    } catch (err) {
+        // Si hay un error, respondo con codigo 500 (Server Error)
+        return res.status(500).json(err);
     }
 });
+
+
 // get todos pasajeros
+
+/**
+ * GET http://localhost.com/pasajero/
+ */
 router.get('/', async (req, res) => {
-    try{
-        const allPasa = await pasajSchem.find();
-        res.json(allPasa);
-    }catch(err){
-        res.json(err);
+    try {
+        const allPasajeros = await pasajeroService.getAll();
+        return res.json(allPasajeros);
+    } catch (err) {
+        return res.status(500).json(err);
     }
 });
 
-//get pasajero especifico por ID
-   
-router.get('/:pasaId', async (req, res) => {
-    try{
-        const pasaId = await pasajSchem.findById(req.params.pasaId);
-        res.json(pasaId);
-    }catch(err){
-            res.json(err)
-        }
-});
 
-// verifico si el ID del pasajero existe o mostrar err
 
-router.get('/:pasaId', async (req, res) => {
-    const pasaId = req.params.pasaId;
-    if(pasaId) 
-        console.log("Pasanger ID found");
-    else{
-        console.log('Pasanger ID not found.');
+/**
+ * Endpoint para obtener un pasajero por id.
+ * Se consume mediante ruta /pasajeros/ID_DE_PASAJERO
+ */
+router.get('/:pasajeroId', async (req, res) => {
+    try {
+        // Obtengo el pasdajero por id
+        const pasaId = pasajeroService.getById(req.params.pasajeroId);
+
+        return res.json(pasaId);
+    } catch (err) {
+        return res.status(500).json(err)
     }
-    
 });
+
+
+
 
 
 
