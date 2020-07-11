@@ -4,12 +4,14 @@ const router = express.Router();
 const reservationSche = require('../schemas/resSchema');
 const reservationService = require('../services/reservasService');
 
+
 //creo las reservas con ID de pasajero-fecha-Nro de habitacion
 router.post('/', async (req, res) => {
     const reserv = new reservationSche({
         pasaId: req.body.pasaId,
         date: req.body.date,
-        habitacion: req.body.habitacion
+        roomId: req.body.roomId,
+        estado: true
     });
     try {
         await reserv.save()

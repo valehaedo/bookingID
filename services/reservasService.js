@@ -12,18 +12,20 @@ const reservasService = {
     },
 
     /**
-     * Obtiene todas las reservas.
+     * get all the reservas with a limit of 100
+     * @param {number} limit 
      */
     getAll: async function(limit = 100) {
 
+
         // Obtengo todas las reservas
-        const retVal = await reservationSche.find();
+        const query = reservationSche.find();
 
         // Si hay un valor en limit, limito los resultados
         if(limit && limit > 0)
-            return retVal.limit(limit);
+            return query.limit(limit);
         else
-            return retVal;
+            return query;
     },
 
     /**

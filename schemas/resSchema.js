@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 const resSchema = mongoose.Schema({
     pasaId: String,
     date: Date,
-    habitacion: String,
-    estado: String
+    roomId: String,
+    estado: Boolean
     
 });
 

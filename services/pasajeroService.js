@@ -30,14 +30,14 @@ const pasajeroService = {
      */
     getAll: async function (limit = 100) {
 
-        // Obtengo todas las reservas
-        const retVal = await pasajSchem.find();
+        // Obtengo la consulta para obtener las reservas
+        const query = pasajSchem.find();
 
         // Si hay un valor en limit, limito los resultados
         if (limit && limit > 0)
-            return retVal.limit(limit);
+            return await query.limit(limit);
         else
-            return retVal;
+            return await query;
     },
 
     /**

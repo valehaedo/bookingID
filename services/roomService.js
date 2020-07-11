@@ -4,17 +4,16 @@ const roomSchema = require('../schemas/roomSchema');
 
 const roomService = {
     /**
-     * create a room taking number, bed, extraBed, people, breakfast
+     * create a room taking number, bed, extraBed, people
      */
-    create: async function (number, bed, extraBed, people, breakfast) {
+    create: async function (number, bed, extraBed, people) {
 
         // Creo el objeto room con los valores que recibo como parametros
         const room = new roomSchema({
             number: number,
             bed: bed,
             extraBed: extraBed,
-            people: people,
-            breakfast: breakfast
+            people: people
         });
         // Lo guardo en la base
         await room.save();
@@ -30,13 +29,13 @@ const roomService = {
     getAll: async function (limit = 100) {
 
         // get all the rooms
-        const retVal = await roomSchema.find();
+        const query = roomSchema.find();
 
         // if there is a value in limit, i limit the results
         if (limit && limit > 0)
-            return retVal.limit(limit);
+            return await query.limit(limit);
         else
-            return retVal;
+            return query;
     },
     /**
      * I get the rooms serching it by ID
@@ -51,13 +50,11 @@ const roomService = {
 
     },
     deleteById: async function (roomId) {
-        if(roomId)
-            return await roomSchema.findById(roomId);
-        else(err)
+        if (roomId)
+            return await roomSchema.deleteOne({_id: roomId});
+        else
             return null;
-            }
-
-
+    },
 };
 
 module.exports = roomService;

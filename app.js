@@ -14,9 +14,11 @@ app.use(bodyParser.json());
 
 const reservRouter = require('./routes/reservation');
 const pasaRouter = require('./routes/pasajeros');
+const roomRouter = require ('./routes/rooms');
 
 app.use('/pasajeros', pasaRouter);
 app.use('/reservation', reservRouter);
+app.use('/rooms', roomRouter);
 
 app.get('/', (req, res) => {
     res.send('estamos conectados');

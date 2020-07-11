@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
     try {
 
         // Creo y obtengo el pasajero creado
-        const newPasajero = pasajeroService.create(req.body.nombre, req.body.apellido, req.body.pasaporte);
+        const newPasajero = await pasajeroService.create(req.body.nombre, req.body.apellido, req.body.pasaporte);
 
         // Devuelvo la response con el pasajero creado
         return res.json(newPasajero);
@@ -22,14 +22,15 @@ router.post('/', async (req, res) => {
 // get todos pasajeros
 
 /**
- * GET http://localhost.com/pasajero/
+ * GET http://localhost.com/pasajero?limit=10
  */
 router.get('/', async (req, res) => {
     try {
-        const allPasajeros = await pasajeroService.getAll();
+        const limit = parseInt(req.query.limit);
+        const allPasajeros = await pasajeroService.getAll(limit || 4);
         return res.json(allPasajeros);
     } catch (err) {
-        return res.status(500).json(err);
+        return res.status(500).json(err.message || err);
     }
 });
 
@@ -42,7 +43,7 @@ router.get('/', async (req, res) => {
 router.get('/:pasajeroId', async (req, res) => {
     try {
         // Obtengo el pasdajero por id
-        const pasaId = pasajeroService.getById(req.params.pasajeroId);
+        const pasaId = await pasajeroService.getById(req.params.pasajeroId);
 
         return res.json(pasaId);
     } catch (err) {
