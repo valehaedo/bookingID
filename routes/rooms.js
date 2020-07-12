@@ -19,28 +19,18 @@ router.post('/', async (req, res) => {
 
 //get all the rooms
 
-router.get('/', async(req, res) => {
-    try{
-        // Defino el maximo permitido.
-        const maxAllowed = 100;
-
-        // Obtengo el limite
-        let limit = req.query.limit;
-        
-        // Si el limite es mas alto que lo permitido, lo reemplazo.
-        if(limit > maxAllowed)
-            limit = maxAllowed;
-
-        // Obtengo los datos
-        retVal = await roomService.getAll(limit);
-
-        return res.json(retVal);
-    }catch(err){
-        return res.json(err);
+router.get('/', async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit);
+        const allRooms = await roomService.getAll(limit || 4);
+        return res.json(allRooms);
+    } catch (err) {
+        return res.status(500).json(err.message || err);
     }
 });
 
 //get room by ID
+
 router.get('/:roomId', async (req, res) => {
     try {
         // Obtengo el pasdajero por id
@@ -52,7 +42,7 @@ router.get('/:roomId', async (req, res) => {
     }
 });
 
-//delete the roo by ID
+//delete the room by ID
 router.delete('/:roomId', async (req, res) => {
     try{
         const roomId = await roomService.deleteById(req.params.roomId);
@@ -61,5 +51,7 @@ router.delete('/:roomId', async (req, res) => {
         return res.status(500).json(err)
     }
 });
+
+
 
 module.exports = router;

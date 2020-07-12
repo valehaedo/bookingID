@@ -1,6 +1,5 @@
 const roomSchema = require('../schemas/roomSchema');
-
-
+const queryService = require('../utilities/queryService');
 
 const roomService = {
     /**
@@ -30,12 +29,15 @@ const roomService = {
 
         // get all the rooms
         const query = roomSchema.find();
+        let filterQuery = roomSchema.find(filter);
+        return await queryService.queryLimiter(filterQuery, limit);
 
         // if there is a value in limit, i limit the results
-        if (limit && limit > 0)
+        /*if (limit && limit > 0)
             return await query.limit(limit);
         else
             return query;
+        */
     },
     /**
      * I get the rooms serching it by ID
@@ -55,6 +57,11 @@ const roomService = {
         else
             return null;
     },
+
+    
 };
+
+
+
 
 module.exports = roomService;

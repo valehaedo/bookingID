@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 //schema for reservations
 const resSchema = mongoose.Schema({
     pasaId: String,
-    date: Date,
+    date: String,
     roomId: String,
     estado: Boolean
     
