@@ -8,6 +8,8 @@ const reservationService = require('../services/reservasService');
 //creo las reservas con ID de pasajero-fecha-Nro de habitacion
 router.post('/', async (req, res) => {
 
+
+
     try {
         const reservation = await reservationService.create
             (req.body.pasaID, req.body.date, req.body.roomId, req.body.estado)
@@ -30,9 +32,9 @@ router.get('/search', async (req, res) => {
         let reservations;
         // Llamo la funcion de una manera u otra dependiendo de si limit tiene valor
         if (limit)
-            reservations = await reservationService.searchByDateRange(req.query.dateFrom, req.query.dateTo, limit);
+            reservations = await reservationService.search(req.query.dateFrom, req.query.dateTo, req.query.roomId, limit);
         else
-            reservations = await reservationService.searchByDateRange(req.query.dateFrom, req.query.dateTo);
+            reservations = await reservationService.search(req.query.dateFrom, req.query.dateTo, req.query.roomId);
         
         return res.json(reservations);
     } catch (err) {
@@ -109,21 +111,5 @@ router.get('/:reservationId', async (req, res) => {
 
 
 //get reservations by date and room ID
-router.get('/searchDateRangeRoom', async (req, res) => {
-    try {
-        
-        let reservations;
-        // Llamo la funcion de una manera u otra dependiendo de si limit tiene valor
-        if (limit)
-            reservations = await reservationService.serchByRoomNDate(req.query.dateFrom, req.query.dateTo, req.query.roomId);
-        else
-            reservations = null;
-
-        return reservations;
-    } catch (err) {
-        return res.status(500).json(err);
-    }
-
-});
 
 module.exports = router;

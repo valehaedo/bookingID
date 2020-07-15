@@ -1,5 +1,5 @@
 const pasajSchem = require('../schemas/pasSchema');
-const queryService = require('../utilities/queryService');
+const queryService = require('./utilities/queryService');
 
 /**
  * Se encarga de la interaccion de los datos de pasajeros con la base de datos.
@@ -33,7 +33,7 @@ const pasajeroService = {
 
         // Obtengo la consulta para obtener las reservas
         const query = pasajSchem.find();
-        let filterQuery = pasajSchem.find(filter);
+        let filterQuery = pasajSchem.find();
         return await queryService.queryLimiter(filterQuery, limit);
 
         // Si hay un valor en limit, limito los resultados
