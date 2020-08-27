@@ -29,11 +29,21 @@ const pasajeroService = {
      * Devuelve todos los pasajeros.
      * @param {number} limit Limite de registros a obtener. Si este valor es null, devuelve todo.
      */
-    getAll: async function (limit = 100) {
+    getAll: async function (name, lastName, pasport, limit = 100) {
+        //defino objeto filtro
+        let filter = {};
+        //TODO: declarar el objeto filter, agregar los otros filtros, pasale los objetos
+        if (name)
+            filter.nombre = name;
+        if (lastName)
+            filter.apellido = lastName;
+        if (pasport)
+            filter.pasaporte = pasport;
 
         // Obtengo la consulta para obtener las reservas
-        const query = pasajSchem.find();
-        let filterQuery = pasajSchem.find();
+
+        console.log(filter)
+        let filterQuery = pasajSchem.find(filter);
         return await queryService.queryLimiter(filterQuery, limit);
 
         // Si hay un valor en limit, limito los resultados

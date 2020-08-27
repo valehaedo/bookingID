@@ -27,8 +27,9 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit);
-        const allPasajeros = await pasajeroService.getAll(limit || 4);
+        const allPasajeros = await pasajeroService.getAll(req.query.nombre, req.query.apellido, req.query.pasaporte, limit);
         return res.json(allPasajeros);
+
     } catch (err) {
         return res.status(500).json(err.message || err);
     }
