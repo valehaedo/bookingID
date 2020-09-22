@@ -43,7 +43,7 @@ router.get('/:roomId', async (req, res) => {
 });
 
 //delete the room by room number
-router.delete('/${number}', async (req, res) => {
+router.delete('/:number', async (req, res) => {
     try{
         const number = await roomService.deleteByNumber(req.params.number);
         return res.json(number)
