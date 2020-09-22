@@ -21,8 +21,8 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit);
-        const allRooms = await roomService.getAll(limit || 4);
+        const number = parseInt(req.query.number);
+        const allRooms = await roomService.getAll(number);
         return res.json(allRooms);
     } catch (err) {
         return res.status(500).json(err.message || err);
@@ -42,11 +42,11 @@ router.get('/:roomId', async (req, res) => {
     }
 });
 
-//delete the room by ID
-router.delete('/:roomId', async (req, res) => {
+//delete the room by room number
+router.delete('/${number}', async (req, res) => {
     try{
-        const roomId = await roomService.deleteById(req.params.roomId);
-        return res.json(roomId)
+        const number = await roomService.deleteByNumber(req.params.number);
+        return res.json(number)
     }catch(err){
         return res.status(500).json(err)
     }
